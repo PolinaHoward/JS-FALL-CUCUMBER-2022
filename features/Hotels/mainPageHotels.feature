@@ -34,8 +34,8 @@ When I click address
 
 
 Feature: Code Test
-#Background:
- #Given I am on hotels
+Background:
+ Given I am on hotels
     # Score - 40
      @codeTest-1
     Scenario Outline: Verify user is able to change language
