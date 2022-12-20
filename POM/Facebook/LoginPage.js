@@ -1,3 +1,4 @@
+const { expect } = require('chai');
 const Commands = require('../Commands');
 
 class LoginPage {
@@ -8,13 +9,10 @@ class LoginPage {
     loginEmailLocator = '#email';
     loginPassLocator = '#pass';
     loginButtonLocator = '<button>';
-    messengerLinkLocator = '*=Messenger';
-    oculusLinkLocator = '=Oculus'
     createNewAccountLocator = '//a[text()="Create New Account" or text()="Create new account"]';
-    instagramLinkLocator = '=Instagram';
-    portalLinkLocator = '=Portal';
-    metaPayLinkLocator= '=Meta Pay'
-    
+    linkNameLocator = ''
+
+    // functions to interact with the web-Elements on the LoginPage
     async enterLoginEmail(userEmail) {
         await this.commands.typeInWebElement(this.loginEmailLocator, userEmail);
     }
@@ -26,48 +24,58 @@ class LoginPage {
     async clickLoginInButton() {
         await this.commands.clickWebElement(this.loginButtonLocator);
     }
-     
-    async clickMessengerLink(){
-        await this.commands.clickWebElement(this.messengerLinkLocator)
-    }
 
     async clickCreateNewAccountButton() {
         await this.commands.clickWebElement(this.createNewAccountLocator);
     }
 
-    async clickOculusLink(){
-        await this.commands.clickWebElement(this.oculusLinkLocator)
+    async isLoginFieldEnabled(fieldName) {
+        let isFieldEnabled = false;
+        switch (fieldName.toLowerCase()) {
+            case 'email':
+                isFieldEnabled = await this.commands.isWebElementEnabled(this.loginEmailLocator);
+                break;
+            case 'password':
+                isFieldEnabled = await this.commands.isWebElementEnabled(this.loginPassLocator);
+                break;
+            case 'button':
+                isFieldEnabled = await this.commands.isWebElementEnabled(this.loginButtonLocator);
+                break;        
+            default:
+                break;
+        }
+        return isFieldEnabled;
     }
 
-    async clickInstagramLink() {
-        await this.commands.clickWebElement(this.instagramLinkLocator);
+    async isLoginEmailEnabled() {
+        return await this.commands.isWebElementEnabled(this.loginEmailLocator);
     }
 
-    async clickPortalLink() {
-        await this.commands.clickWebElement(this.portalLinkLocator);
+    async isLoginPasswordEnabled() {
+        return await this.commands.isWebElementEnabled(this.loginPassLocator);
     }
 
-    async clickPortalLink() {
-        await this.commands.clickWebElement(this.portalLinkLocator);
+    async isLoginButtonEnabled() {
+        return await this.commands.isWebElementEnabled(this.loginButtonLocator);
     }
 
-    async clickMetaPayLink() {
-        await this.commands.clickWebElement(this.metaPayLinkLocator);
+    async clickLinkName(linkName) {
+        await this.commands.clickWebElement(`=${linkName}`);
     }
 
-    async isLoginEmailEnabled(){
-      return  await this.commands.isWebElementEnabled(this.loginEmailLocator)
-    }
-    
-    async isLoginPasswordEnabled(){
-       return await this.commands.isWebElementEnabled(this.loginPassLocator)
-     }
-
-    async isLoginButtonEnabled(){
-        return await this.commands.isWebElementEnabled(this.loginButtonLocator)
+    async isMultipleWindowsOpen(expWindowsCount) {
+        console.log(`\n\n this.commands.getHandles().length -> ${(await this.commands.getHandles()).length}`);
+        return (await this.commands.getHandles()).length === expWindowsCount;
     }
 
+    async getCurrentWindowsCount() {
+        return (await this.commands.getHandles()).length;
+    }
 
+    async waitForNewLinkWindow(numWindowBeforeClick) {
+        // waitFor until number of windows/handles is equals to (this.totalWindowsBeforeClick+1)
+        this.commands.waitForNewWindow(numWindowBeforeClick);
+    }
 
 
 }

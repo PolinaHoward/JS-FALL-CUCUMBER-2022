@@ -20,6 +20,44 @@ class HomePage {
     nextCalendarButtonLocator = '(//button[@data-stid="date-picker-paging"])[2]';
     prevCalendarButtonLocator = '(//button[@data-stid="date-picker-paging"])[1]';
     leftSideCalendarHeaderLocator = '(//div[@class="uitk-date-picker-month"])[1]//h2';
+    
+
+    //List ypur property
+    listYourPropertyLink = '//a[@id="listYourProperty"]'
+
+    //travelers
+    travelersField = '//button[@data-stid="open-room-picker"]'
+    
+
+
+    //TEST
+    languageButton ='//button[@data-stid="button-type-picker-trigger"]'
+    languageDropdown = '//select[@id="language-selector"]'
+    englishLanguageDropdown = '//select[@id="language-selector"]//option[contains(text() , "English")]'
+    spanishLanguageDropDown = '//select[@id="language-selector"]//option[contains(text() , "Espa")]'
+
+
+
+   //test
+   async clickOnLanguageButton(){
+    await this.commands.clickWebElement(this.languageButton)
+   }
+
+   async clickOnLanguageDropdown(){
+    await this.commands.clickWebElement(this.languageDropdown)
+   }
+
+   async clickLanguage(language) {
+    await this.commands.clickWebElement(`=${language}`);
+}
+
+
+
+
+
+
+
+
 
     // functions to interact with the web-Elements on the HomePage
     async enterDestination(destination) {
@@ -84,5 +122,12 @@ class HomePage {
         }
     }
 
+    async clickListYourProperty(){
+        await this.commands.clickWebElement(this.listYourPropertyLink)
+    }
+     
+    async clickTravelersField(){
+        await this.commands.clickWebElement(this.travelersField)
+    }
 }
 module.exports = HomePage;

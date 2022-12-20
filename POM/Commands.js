@@ -66,13 +66,10 @@ class Commands {
          * input: string(locator)
          */
         async clickWebElement(locator) {
-            /*
-                1. find the webElement
-                2. if found, click it
-                3. otherwise, wait for 1-second then start from step-1
-    
-                do above flow for 30-seconds
-            */
+            await $(locator).waitForClickable({
+                timeout:120000,
+                timeoutMsg : 'Elemeent is not clickable'
+               })
             await $(locator).click();
         }
     
@@ -235,6 +232,14 @@ class Commands {
             }
         }
     }
+
+    async scrollToWebElement(locator) {
+        await $(locator).scrollIntoView()
+    }
+
+    
+
+
 
 }
 module.exports = Commands;
