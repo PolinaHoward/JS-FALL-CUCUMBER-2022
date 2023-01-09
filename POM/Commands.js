@@ -1,6 +1,5 @@
+const moment = require('../utils/Dates')
 class Commands {
-
-
 
 
     /**
@@ -66,10 +65,11 @@ class Commands {
          * input: string(locator)
          */
         async clickWebElement(locator) {
-            await $(locator).waitForClickable({
+            /*await $(locator).waitForClickable({
                 timeout:120000,
                 timeoutMsg : 'Elemeent is not clickable'
                })
+               */
             await $(locator).click();
         }
     
@@ -87,6 +87,9 @@ class Commands {
                 do above flow for 30-seconds
             */
             return await $(locator).isEnabled();
+        }
+        async isWebElementDisplayed(locator){
+            return await $(locator).isDisplayed()
         }
     
         /**
@@ -237,9 +240,18 @@ class Commands {
         await $(locator).scrollIntoView()
     }
 
-    
+    async clickElmentMultTimes(locator, numberOfClicks) {
+        const element = await this.findWebElement(locator)
+        for (let counter = 2; counter <= numberOfClicks; counter++) {
+            await element.click()
+            console.log(`\n\nclick->${counter} numberOfClicks: ${numberOfClicks}\n\n`);
+        }
+    }
+
 
 
 
 }
+
+
 module.exports = Commands;
